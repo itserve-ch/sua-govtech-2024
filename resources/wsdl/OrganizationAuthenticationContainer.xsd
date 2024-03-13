@@ -1,0 +1,1223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 1996-2017 swissdec & itServe AG. All rights reserved.
+    This software is the proprietary information of itServe AG as implementor for swissdec.
+    Use is subject to license terms.
+
+-->
+<xs:schema
+        targetNamespace="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthenticationContainer"
+        xmlns:oac="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthenticationContainer"
+        xmlns:oa="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthentication"
+        xmlns:c="http://www.swissdec.ch/schema/common/20200220/Common"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+        attributeFormDefault="unqualified" version="0.0">
+
+    <!-- 11.09.2023  author: itServe, bfh
+        intern: final-1.1.0 // FINAL
+        business-view  = OK
+        technical-view = final
+
+        SVN keywords
+        $Date::                                                 $: Date of last commit
+        $Revision::                                             $: Revision of last commit
+        $Author::                                               $: Author of last commit
+
+   -->
+
+    <xs:import namespace="http://www.swissdec.ch/schema/common/20200220/Common"
+               schemaLocation="Common.xsd"/>
+
+    <xs:import
+            namespace="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthentication"
+            schemaLocation="OrganizationAuthentication.xsd"/>
+
+    <xs:complexType name="RegisterOrganizationRequestType">
+        <xs:sequence>
+            <!-- Problem with MS dotnet generation; new Initial... -->
+            <xs:element name="RequestContext" type="oac:RequestContextType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AuftragsKontext</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Contexte de la demande</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OrganizationRegistration" type="oa:OrganizationRegistrationType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Registrierung des Unternehmens</translation>
+                        <description>
+                            <short>Registrierung des Unternehmens zur Bestellung eines UID-BFS Zertifikates</short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterOrganizationResponseType">
+        <xs:sequence>
+            <xs:element name="ResponseContext" type="oac:ResponseContextType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Antwort-Kontext</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Contexte de la réponse</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CertificateRequest-ID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>ZertificatsanfrageID</translation>
+                        <description>
+                            <short>
+                                Die ZertificatsanfrageID wird vom Distributor vergeben und verwaltet.
+                                Damit lassen sich mehrere Prozess-Schritte "verknüpfen" und
+                                ergibt dadurch eine Fall- oder Supportnummer.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification du message</translation>
+                        <description>
+                            <short>
+                                L'identification du message (CertificateRequest-ID) est donnée et administrée
+                                par le distibuteur. Avec "CertificateRequest-ID", plusieurs pas de processus
+                                peuvent être enchaîné. Il résulte un numéro de cas ou de support.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="RegisterOrganisationConsumer" type="oac:RegisterOrganisationConsumerType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Registrierungsorganisation</translation>
+                        <description>
+                            <short>Registrierungsorganisation beim Versicherer oder Behörden</short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterOrganisationConsumerType">
+        <xs:sequence>
+            <xs:element name="AddresseeContext" type="oac:ResponseContextType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Adressat Kontext</translation>
+                        <description>
+                            <short>Kontext vom Versicherer oder Behörde</short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Credentials" type="oac:CredentialsType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Verbeitung erfolgreich beendet</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Travail terminé avec succès</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CredentialsType">
+        <xs:sequence>
+            <xs:element name="Key" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Schlüssel</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Clé</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Password" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Passwort</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Mot de passe</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GetResultFromOrganizationRegistrationRequestType">
+        <xs:sequence>
+            <xs:element name="RequestContext" type="oac:RequestContextType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AuftragsKontext</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Contexte de la demande</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CertificateRequest-ID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>ZertificatsanfrageID</translation>
+                        <description>
+                            <short>
+                                Die ZertificatsanfrageID wird vom Distributor vergeben und verwaltet.
+                                Damit lassen sich mehrere Prozess-Schritte "verknüpfen" und
+                                ergibt dadurch eine Fall- oder Supportnummer.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification du message</translation>
+                        <description>
+                            <short>
+                                L'identification du message (CertificateRequest-ID) est donnée et administrée
+                                par le distibuteur. Avec "CertificateRequest-ID", plusieurs pas de processus
+                                peuvent être enchaîné. Il résulte un numéro de cas ou de support.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Institution" type="oa:InstitutionsType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Versicherer oder Behörde</translation>
+                        <description>
+                            <short>adressierte Versicherer oder Behörde</short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Credentials" type="oac:CredentialsType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Zugriffsdaten</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GetResultFromOrganizationRegistrationResponseType">
+        <xs:sequence>
+            <xs:element name="ResponseContext" type="oac:ResponseContextType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Antwort-Kontext</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Contexte de la réponse</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CertificateRequest-ID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>ZertificatsanfrageID</translation>
+                        <description>
+                            <short>
+                                Die ZertificatsanfrageID wird vom Distributor vergeben und verwaltet.
+                                Damit lassen sich mehrere Prozess-Schritte "verknüpfen" und
+                                ergibt dadurch eine Fall- oder Supportnummer.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification du message</translation>
+                        <description>
+                            <short>
+                                L'identification du message (CertificateRequest-ID) est donnée et administrée
+                                par le distibuteur. Avec "CertificateRequest-ID", plusieurs pas de processus
+                                peuvent être enchaîné. Il résulte un numéro de cas ou de support.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Result" type="oac:ResultType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Resultat</translation>
+                        <description>
+                            <short>Resultat mit Zustand und entsprechenden Informationen</short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ResultType">
+        <xs:sequence>
+            <xs:element name="AddresseeContext" type="oac:ResponseContextType"/>
+            <xs:choice>
+                <xs:element name="Processing" type="oac:ProcessingType">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="de">
+                            <translation>Verarbeitung</translation>
+                            <description>
+                                <short>noch in Verarbeitung</short>
+                            </description>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Success" type="oa:RegistrationQuittanceType">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="de">
+                            <translation>Erfolgreich</translation>
+                            <description>
+                                <short>Erfolgreich mit Informationen</short>
+                            </description>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ConsumerResultType">
+        <xs:sequence minOccurs="0">
+            <xs:element name="AddresseeContext" type="oac:ResponseContextType"/>
+            <xs:choice>
+                <xs:element name="Processing" type="oac:ProcessingType">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="de">
+                            <translation>Verarbeitung</translation>
+                            <description>
+                                <short>noch in Verarbeitung</short>
+                            </description>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Success" type="oac:ConsumerSuccessType">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="de">
+                            <translation>Erfolgreich</translation>
+                            <description>
+                                <short>Erfolgreich mit Informationen</short>
+                            </description>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ConsumerSuccessType">
+        <xs:sequence>
+            <xs:element name="CompanyName" type="c:CompanyNameType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Unternehmensdaten</translation>
+                        <description>
+                            <short>
+                                Beschreibung der wesentlichen Unternehmensdaten
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Nom de l'entreprise</translation>
+                        <description>
+                            <short>
+                                Nom de l'entreprise
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CompanyAddress" type="c:AddressType"/>
+            <xs:element name="CompanyUID-BFS" type="oa:UID-BFSType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>UnternehmensID BFS</translation>
+                        <description>
+                            <short>
+                                Unternehmensidentifikation BFS
+                            </short>
+                            <domain>
+                                neue Unternehmensidentifikation vom BFS;
+                            </domain>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification de l'entreprise OFS</translation>
+                        <description>
+                            <short>
+                                Identification de l'entreprise OFS
+                            </short>
+                            <domain>
+                                Nouvelle identification de l'entreprise OFS
+                            </domain>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="QualityLevel" type="xs:int">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Qualitätsstufe</translation>
+                        <description>
+                            <short>Qualitätsstufe der Überprüfung</short>
+                            <technical>
+                                Qualität der Überprüfung der Daten
+                                0 = automatisch geprüft
+                                10 = manuell geprüft
+                                100 = entsprechend ZertES geprüft
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InstitutionContactPerson" type="oa:ContactPersonType"/>
+            <xs:element name="Delegate" type="c:DelegateType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Stellvertreter</translation>
+                        <description>
+                            <short>Stellvertreter des Unernehmens</short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Remplaçant</translation>
+                        <description>
+                            <short>Remplaçant de l'entreprise</short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ProcessingType">
+        <xs:sequence>
+            <xs:element name="ExpectedAvailability" type="xs:dateTime" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Erwartete Verfügbarkeit</translation>
+                        <description>
+                            <short>
+                                Erwartete Verfügbarkeit der Rückmeldung
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Disposition prevu</translation>
+                        <description>
+                            <short>Disposition prevu des retours</short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Comment" type="c:NotificationsType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="SignCertificateRequestType">
+        <xs:sequence>
+            <xs:element name="RequestContext" type="oac:RequestContextType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AuftragsKontext</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Contexte de la demande</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CertificateRequest-ID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>ZertificatsanfrageID</translation>
+                        <description>
+                            <short>
+                                Die ZertificatsanfrageID wird vom Distributor vergeben und verwaltet.
+                                Damit lassen sich mehrere Prozess-Schritte "verknüpfen" und
+                                ergibt dadurch eine Fall- oder Supportnummer.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification du message</translation>
+                        <description>
+                            <short>
+                                L'identification du message (CertificateRequest-ID) est donnée et administrée
+                                par le distibuteur. Avec "CertificateRequest-ID", plusieurs pas de processus
+                                peuvent être enchaîné. Il résulte un numéro de cas ou de support.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CertificateSignRequest" type="oa:CertificateSignRequestType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Zertifikatsanforderung</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SignCertificateResponseType">
+        <xs:sequence>
+            <xs:element name="ResponseContext" type="oac:ResponseContextType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Antwort-Kontext</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Contexte de la réponse</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CertificateRequest-ID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>ZertificatsanfrageID</translation>
+                        <description>
+                            <short>
+                                Die ZertificatsanfrageID wird vom Distributor vergeben und verwaltet.
+                                Damit lassen sich mehrere Prozess-Schritte "verknüpfen" und
+                                ergibt dadurch eine Fall- oder Supportnummer.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification du message</translation>
+                        <description>
+                            <short>
+                                L'identification du message (CertificateRequest-ID) est donnée et administrée
+                                par le distibuteur. Avec "CertificateRequest-ID", plusieurs pas de processus
+                                peuvent être enchaîné. Il résulte un numéro de cas ou de support.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Certificate" type="oa:CertificateSignResponseType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Zertifikat</translation>
+                        <description>
+                            <short>UID-BFS Zertifikat</short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="RevokePassword" type="oa:NotEmptyStringType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Passwort zur Revokation</translation>
+                        <description>
+                            <short>Passwort zur Revokation</short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RenewCertificateRequestType">
+        <xs:sequence>
+            <xs:element name="RequestContext" type="oac:RequestContextType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AuftragsKontext</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Contexte de la demande</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CertificateRequest-ID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>ZertificatsanfrageID</translation>
+                        <description>
+                            <short>
+                                Die ZertificatsanfrageID wird vom Distributor vergeben und verwaltet.
+                                Damit lassen sich mehrere Prozess-Schritte "verknüpfen" und
+                                ergibt dadurch eine Fall- oder Supportnummer.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification du message</translation>
+                        <description>
+                            <short>
+                                L'identification du message (CertificateRequest-ID) est donnée et administrée
+                                par le distibuteur. Avec "CertificateRequest-ID", plusieurs pas de processus
+                                peuvent être enchaîné. Il résulte un numéro de cas ou de support.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CertificateSignRequest" type="oa:CertificateSignRequestBaseType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Zertifikatsanforderung</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RenewCertificateResponseType">
+        <xs:sequence>
+            <xs:element name="ResponseContext" type="oac:ResponseContextType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Antwort-Kontext</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Contexte de la réponse</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CertificateRequest-ID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>ZertificatsanfrageID</translation>
+                        <description>
+                            <short>
+                                Die ZertificatsanfrageID wird vom Distributor vergeben und verwaltet.
+                                Damit lassen sich mehrere Prozess-Schritte "verknüpfen" und
+                                ergibt dadurch eine Fall- oder Supportnummer.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification du message</translation>
+                        <description>
+                            <short>
+                                L'identification du message (CertificateRequest-ID) est donnée et administrée
+                                par le distibuteur. Avec "CertificateRequest-ID", plusieurs pas de processus
+                                peuvent être enchaîné. Il résulte un numéro de cas ou de support.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Certificate" type="oa:CertificateSignResponseType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Zertifikat</translation>
+                        <description>
+                            <short>UID-BFS Zertifikat</short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OrganizationAuthenticationFaultType">
+        <xs:sequence>
+            <xs:element name="FaultContext" type="oac:FaultContextType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Fehler-Kontext</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Contexte d'erreur</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="FaultState" type="c:FaultStateType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Fehler-Status</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>État de l'erreur</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RequestContextType">
+        <xs:sequence>
+            <xs:element name="UserAgent" type="c:UserAgentType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Applikationsinformation</translation>
+                        <description>
+                            <short>
+                                Beschreibung der wesentlichen System-Identifikations-Daten
+                            </short>
+                            <technical>
+                                Zur Qualitätsicherung des Übermittlungsprozesses werden die wesentlichen Informationen
+                                der beteiligten gesichert
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Informations concernant l'application</translation>
+                        <description>
+                            <short>
+                                Description des données essentielles d'identification de système
+                            </short>
+                            <technical>
+                                Pour l'assurance de la qualité, les informations essentielles des participants
+                                sont sauvegardées.
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CompanyName" type="c:CompanyNameType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Unternehmensdaten</translation>
+                        <description>
+                            <short>
+                                Beschreibung der wesentlichen Unternehmensdaten
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Nom de l'entreprise</translation>
+                        <description>
+                            <short>
+                                Nom de l'entreprise
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TransmissionDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Übertragungszeitpunkt</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Date et Temps de transmission</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="RequestID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AuftragsID</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur de la demande</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="LanguageCode" type="c:LanguageCodeType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Sprachcode</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Code de langage</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TestCase" type="c:EmptyType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Testfall</translation>
+                        <description>
+                            <short>
+                                Testfall-Kennzeichnung
+                            </short>
+                            <technical>
+                                Die Daten sollen empfangen und quittiert werden.
+                                Aber OHNE PRODUKTIVE VERARBEITUNG!!!
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Cas de test</translation>
+                        <description>
+                            <short>
+                                Identificateur pour des cas de test
+                            </short>
+                            <technical>
+                                Reception et quittance des données, mais
+                                SANS TRAITEMENT PRODUCTIF!!!
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MonitoringID" type="c:IDType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>ÜberwachungsID</translation>
+                        <description>
+                            <short>
+                                ÜberwachungsID
+                            </short>
+                            <technical>
+                                Die ÜberwachungsID wird vorallem in der Referenzapplikation zur Aufteilung der Daten
+                                verwendet
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>ÜberwachungsID</translation>
+                        <description>
+                            <short>
+                                Identificateur de surveillance
+                            </short>
+                            <technical>
+                                L'identificateur de surveillance est surtout utilisé dans l'application de
+                                référence pour le classement des données.
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ResponseContextType">
+        <xs:sequence>
+            <xs:element name="UserAgent" type="c:UserAgentType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Applikationsinformation</translation>
+                        <description>
+                            <short>
+                                Beschreibung der wesentlichen System-Identifikations-Daten
+                            </short>
+                            <technical>
+                                Zur Qualitätsicherung des Übermittlungsprozesses werden die wesentlichen Informationen
+                                der beteiligten gesichert
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Informations concernant l'application</translation>
+                        <description>
+                            <short>
+                                Description des données essentielles d'identification de système
+                            </short>
+                            <technical>
+                                Pour l'assurance de la qualité, les informations essentielles des participants
+                                sont sauvegardées.
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InstitutionName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Institutionsname</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Nom de l'institution</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TransmissionDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Übertragungszeitpunkt</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Temps de transmission</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ResponseID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AntwortID</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur de la réponse</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="RequestID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AuftragsID</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur de la demande</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TestCase" type="c:EmptyType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Testfall</translation>
+                        <description>
+                            <short>
+                                Testfall-Kennzeichnung
+                            </short>
+                            <technical>
+                                Die Daten wurden empfangen und quittiert.
+                                Aber OHNE PRODUKTIVE VERARBEITUNG!!!
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Cas de test</translation>
+                        <description>
+                            <short>
+                                Identificateur pour des cas de test
+                            </short>
+                            <technical>
+                                Reception et quittance des données, mais
+                                SANS TRAITEMENT PRODUCTIF!!!
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- 15.08.2018  author: ab; delete later -->
+    <!--
+    <xs:complexType name="AddresseeResponseContextType">
+        <xs:sequence>
+            <xs:element name="UserAgent" type="c:UserAgentType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Applikationsinformation</translation>
+                        <description>
+                            <short>
+                                Beschreibung der wesentlichen System-Identifikations-Daten
+                            </short>
+                            <technical>
+                                Zur Qualitätsicherung des Übermittlungsprozesses werden die wesentlichen Informationen
+                                der beteiligten gesichert
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Informations concernant l'application</translation>
+                        <description>
+                            <short>
+                                Description des données essentielles d'identification de système
+                            </short>
+                            <technical>
+                                Pour l'assurance de la qualité, les informations essentielles des participants
+                                sont sauvegardées.
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InstitutionName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Institutionsname</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Nom de l'institution</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TransmissionDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Übertragungszeitpunkt</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Temps de transmission</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CertificateRequest-ID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>ZertificatsanfrageID</translation>
+                        <description>
+                            <short>
+                                Die ZertificatsanfrageID wird vom Distributor vergeben und verwaltet.
+                                Damit lassen sich mehrere Prozess-Schritte "verknüpfen" und
+                                ergibt dadurch eine Fall- oder Supportnummer.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification du message</translation>
+                        <description>
+                            <short>
+                                L'identification du message (CertificateRequest-ID) est donnée et administrée
+                                par le distibuteur. Avec "CertificateRequest-ID", plusieurs pas de processus
+                                peuvent être enchaîné. Il résulte un numéro de cas ou de support.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ResponseID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AntwortID</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur de la réponse</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="RequestID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AuftragsID</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur de la demande</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TestCase" type="c:EmptyType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Testfall</translation>
+                        <description>
+                            <short>
+                                Testfall-Kennzeichnung
+                            </short>
+                            <technical>
+                                Die Daten wurden empfangen und quittiert.
+                                Aber OHNE PRODUKTIVE VERARBEITUNG!!!
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Cas de test</translation>
+                        <description>
+                            <short>
+                                Identificateur pour des cas de test
+                            </short>
+                            <technical>
+                                Reception et quittance des données, mais
+                                SANS TRAITEMENT PRODUCTIF!!!
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    -->
+    <xs:complexType name="FaultContextType">
+        <xs:sequence>
+            <xs:element name="UserAgent" type="c:UserAgentType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Applikationsinformation</translation>
+                        <description>
+                            <short>
+                                Beschreibung der wesentlichen System-Identifikations-Daten
+                            </short>
+                            <technical>
+                                Zur Qualitätsicherung des Übermittlungsprozesses werden die wesentlichen Informationen
+                                der beteiligten gesichert
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Informations concernant l'application</translation>
+                        <description>
+                            <short>
+                                Description des données essentielles d'identification de système
+                            </short>
+                            <technical>
+                                Pour l'assurance de la qualité, les informations essentielles des participants
+                                sont sauvegardées.
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OrganizationName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Organizationsname</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Nom de l'Organization</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TransmissionDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Übertragungszeitpunkt</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Temps de transmission</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ResponseID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AntwortID</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur de la réponse</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="RequestID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AuftragsID</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur de la demande</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TestCase" type="c:EmptyType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Testfall</translation>
+                        <description>
+                            <short>
+                                Testfall-Kennzeichnung
+                            </short>
+                            <technical>
+                                Die Daten wurden empfangen und quittiert.
+                                Aber OHNE PRODUKTIVE VERARBEITUNG!!!
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Cas de test</translation>
+                        <description>
+                            <short>
+                                Identificateur pour des cas de test
+                            </short>
+                            <technical>
+                                Reception et quittance des données, mais
+                                SANS TRAITEMENT PRODUCTIF!!!
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FaultConsumerContextType">
+        <xs:sequence>
+            <xs:element name="UserAgent" type="c:UserAgentType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Applikationsinformation</translation>
+                        <description>
+                            <short>
+                                Beschreibung der wesentlichen System-Identifikations-Daten
+                            </short>
+                            <technical>
+                                Zur Qualitätsicherung des Übermittlungsprozesses werden die wesentlichen Informationen
+                                der beteiligten gesichert
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Informations concernant l'application</translation>
+                        <description>
+                            <short>
+                                Description des données essentielles d'identification de système
+                            </short>
+                            <technical>
+                                Pour l'assurance de la qualité, les informations essentielles des participants
+                                sont sauvegardées.
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OrganizationName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Organizationsname</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Nom de l'Organization</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TransmissionDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Übertragungszeitpunkt</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Temps de transmission</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ResponseID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AntwortID</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur de la réponse</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="RequestID" type="c:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AuftragsID</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur de la demande</translation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TestCase" type="c:EmptyType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Testfall</translation>
+                        <description>
+                            <short>
+                                Testfall-Kennzeichnung
+                            </short>
+                            <technical>
+                                Die Daten wurden empfangen und quittiert.
+                                Aber OHNE PRODUKTIVE VERARBEITUNG!!!
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Cas de test</translation>
+                        <description>
+                            <short>
+                                Identificateur pour des cas de test
+                            </short>
+                            <technical>
+                                Reception et quittance des données, mais
+                                SANS TRAITEMENT PRODUCTIF!!!
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

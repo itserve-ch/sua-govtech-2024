@@ -1,0 +1,929 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 1996-2017 swissdec & itServe AG. All rights reserved.
+    This software is the proprietary information of itServe AG as implementor for swissdec.
+    Use is subject to license terms.
+
+-->
+<xs:schema
+        targetNamespace="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthentication"
+        xmlns:oa="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthentication"
+        xmlns:c="http://www.swissdec.ch/schema/common/20200220/Common"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+        attributeFormDefault="unqualified" version="0.0">
+
+    <!-- 11.09.2023  author: itServe, bfh
+        intern: final-1.1.0 // FINAL
+        business-view  = OK
+        technical-view = final
+
+        SVN keywords
+        $Date::                                                 $: Date of last commit
+        $Revision::                                             $: Revision of last commit
+        $Author::                                               $: Author of last commit
+
+   -->
+
+
+    <xs:import namespace="http://www.swissdec.ch/schema/common/20200220/Common"
+               schemaLocation="Common.xsd"/>
+
+
+    <xs:complexType name="OrganizationRegistrationBaseType">
+        <xs:sequence>
+            <xs:element name="Institution" type="oa:InstitutionsType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OrganizationRegistrationType">
+        <xs:complexContent>
+            <xs:extension base="oa:OrganizationRegistrationBaseType">
+                <xs:sequence>
+                    <xs:element name="CompanyUID-BFS" type="oa:UID-BFSType">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="de">
+                                <translation>UnternehmensID BFS</translation>
+                                <description>
+                                    <short>
+                                        Unternehmensidentifikation BFS
+                                    </short>
+                                    <domain>
+                                        neue Unternehmensidentifikation vom BFS;
+                                    </domain>
+                                </description>
+                            </xs:documentation>
+                            <xs:documentation xml:lang="fr">
+                                <translation>Identification de l'entreprise OFS</translation>
+                                <description>
+                                    <short>
+                                        Identification de l'entreprise OFS
+                                    </short>
+                                    <domain>
+                                        Nouvelle identification de l'entreprise OFS
+                                    </domain>
+                                </description>
+                            </xs:documentation>
+                            <xs:documentation>
+                                <usage>all</usage>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="CompanyName" type="c:CompanyNameType">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="de">
+                                <translation>Name</translation>
+                                <description>
+                                    <short>
+                                        Name des Unternehmens
+                                    </short>
+                                </description>
+                            </xs:documentation>
+                            <xs:documentation xml:lang="fr">
+                                <translation>Nom</translation>
+                                <description>
+                                    <short>
+                                        Nom de l'entreprise
+                                    </short>
+                                </description>
+                            </xs:documentation>
+                            <xs:documentation>
+                                <usage>all</usage>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="CompanyContactPerson" type="oa:ContactPersonType"/>
+                    <xs:element name="AuthorizedFor" type="oa:AuthorizedForCompanyType" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegistrationQuittanceType">
+        <xs:sequence>
+            <xs:element name="X509Subject">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="CommonName" type="xs:string"/>
+                        <xs:element name="OrganizationName" type="xs:string"/>
+                        <xs:element name="LocalityName" type="xs:string"/>
+                        <xs:element name="StateOrProvinceName" type="xs:string"/>
+                        <xs:element name="CountryName" type="xs:string"/>
+                        <xs:element name="BusinessCategory" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CompanyUID-BFS" type="oa:UID-BFSType"/>
+            <xs:element name="AuthorizedForUID-BFS" type="oa:UID-BFSType" minOccurs="0"/>
+            <xs:element name="Comment" type="c:NotificationsType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CertificateSignRequestBaseType">
+        <xs:sequence>
+            <xs:element name="PEM" type="xs:base64Binary">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>signierte Zertifikatsanforderung</translation>
+                        <description>
+                            <short>signierte Zertifikatsanforderung</short>
+                            <technical>Die Struktur des verwendeten elektronischen Zertifikatsantrags ist als PKCS#10
+                                standardisiert. Die CSR ist im PEM Format.
+                                Network Working Group, 2000. RFC2986: PKCS #10: Certification Request Syntax
+                                Specification - Version 1.7, online: https://tools.ietf.org/html/rfc2986 (03.11.2015).
+                            </technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CertificateSignRequestType">
+        <xs:complexContent>
+            <xs:extension base="oa:CertificateSignRequestBaseType">
+                <xs:sequence>
+                    <xs:element name="OneTimePassword" type="oa:NotEmptyStringType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="CertificateSignResponseType">
+        <xs:sequence>
+            <xs:element name="SubjectDN" type="oa:NotEmptyStringType"/>
+            <xs:element name="IssuerDN" type="oa:NotEmptyStringType"/>
+            <xs:element name="NotBefore" type="xs:dateTime"/>
+            <xs:element name="NotAfter" type="xs:dateTime"/>
+            <xs:element name="PEM" type="xs:base64Binary">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Zertifikat</translation>
+                        <description>
+                            <short>UID-BFS Zertifikat</short>
+                            <technical>UID-BFS Zertifikat im PEM Format</technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InstitutionsType">
+        <xs:choice>
+            <xs:element name="AHV-AVS" type="oa:AHV-AVS-CustomerIdentificationBaseType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AHV Kunden Identifikation</translation>
+                        <description>
+                            <short>
+                                Enthält AHV Kunden Identifikation aus Sicht der Ausgleichskasse
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification clients AVS</translation>
+                        <description>
+                            <short>
+                                Contient une identification de client selon la caisse de compensation AVS
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>AHV</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="UVG-LAA" type="oa:GenericCustomerIdentificationMultiType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>UVG Kunden Identifikation</translation>
+                        <description>
+                            <short>
+                                Enthält UVG Kunden Identifikation aus Sicht der Versicherung
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification clients LAA</translation>
+                        <description>
+                            <short>
+                                Contient une identification de client selon l'assurance LAA
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>UVG-, AHV</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="UVGZ-LAAC" type="oa:GenericCustomerIdentificationMultiType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>UVGZ Kunden Identifikation</translation>
+                        <description>
+                            <short>
+                                Enthält UVGZ Kunden Identifikation
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification clients LAAC</translation>
+                        <description>
+                            <short>
+                                Contient une identification de client LAAC
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>UVGZ</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="KTG-AMC" type="oa:GenericCustomerIdentificationMultiType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>KTG Kunden Identifikation</translation>
+                        <description>
+                            <short>
+                                Enthält KTG Kunden Identifikation
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification clients AMC (IJM)</translation>
+                        <description>
+                            <short>
+                                Contient une identification de client AMC
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>KTG</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BVG-LPP" type="oa:GenericCustomerIdentificationMultiType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>BVG Kunden Identifikation</translation>
+                        <description>
+                            <short>
+                                Enthält BVG Kunden Identifikation
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification clients LPP</translation>
+                        <description>
+                            <short>
+                                Contient une identification de client LPP
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>BVG, AHV</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="FAK-CAF" type="oa:FAK-CAF-CustomerIdentificationBaseType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>FAK Kunden Identifikation</translation>
+                        <description>
+                            <short>
+                                Enthält FAK Kunden Identifikation aus Sicht der Familien Ausgleichskasse
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identification clients CAF</translation>
+                        <description>
+                            <short>
+                                Contient une identification de client selon la caisse de compensation CAF
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>FAK</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TaxAtSource" type="oa:TaxAtSourceCustomerIdentificationBaseType"/>
+            <xs:element name="Tax" type="oa:TaxAtSourceCustomerIdentificationBaseType"/>
+            <xs:element name="Statistic" type="oa:StatisticIdentificationType"/>
+            <xs:element name="KU-AC" type="oa:GenericCustomerIdentificationMultiType"/>
+            <xs:element name="Other" type="oa:OtherCustomerIdentificationType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Andere Institution</translation>
+                        <description>
+                            <short>Andere Institution</short>
+                            <technical>Andere Institution für zukünftige Standards</technical>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="OtherCustomerIdentificationType">
+        <xs:sequence>
+            <xs:element name="SwissdecStandard" type="c:NotEmptyStringType"/>
+            <xs:element name="SwissdecDomainName" type="c:NotEmptyStringType"/>
+            <xs:element name="SwissdecInstitution" type="oa:GenericInstitutionIdentificationType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AHV-AVS-CustomerIdentificationBaseType">
+        <xs:sequence>
+            <xs:element name="AK-CC-BranchNumber" type="oa:AK-CC-NumberType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AK-Nummer</translation>
+                        <description>
+                            <short>
+                                Nummer der Ausgleichskasse, bei der das Mitglied (das Unternehmen)
+                                angeschlossen ist
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Numéro CC</translation>
+                        <description>
+                            <short>
+                                Numéro de la caisse de compensation du membre (de l'entreprise)
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AK-CC-CustomerNumber" type="oa:NotEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AK-Mitgliednummer</translation>
+                        <description>
+                            <short>
+                                Von der Ausgleichskasse zugeteilte Mitglied- oder Abrechnungsnummer, die zur eindeutigen
+                                Identifikation des Mitgliedes (des Unternehmens) dient.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Numéro de membre CC</translation>
+                        <description>
+                            <short>
+                                Numéro de membre attribué par la caisse de compensation, sert à l'identification
+                                unique du membre (de l'entreprise)
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AK-CC-SubNumber" type="oa:IDType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>AK-SubNummer Mitglied</translation>
+                        <description>
+                            <short>
+                                Ein Kunde kann in der Kundennummer mehrere Subnummern für separate Abrechnungen
+                                wünschen.
+                                Diese werden z.B. für Tochtergesellschaften, Kaderlöhne usw. verwendet
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Numéro accessoire de membre</translation>
+                        <description>
+                            <short>
+                                Un client peut souhaiter que le numéro de membre comporte plusieurs numéros
+                                accessoires pour des décomptes séparés servant par exemple pour les filiales,
+                                les salaires des cadres, etc.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FAK-CAF-CustomerIdentificationBaseType">
+        <xs:sequence>
+            <xs:element name="FAK-CAF-BranchNumber" type="oa:NotEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>FAK-Nummer</translation>
+                        <description>
+                            <short>
+                                Nummer der Familienausgleichskasse, bei der das Mitglied (das Unternehmen)
+                                angeschlossen ist.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Numéro CAFr</translation>
+                        <description>
+                            <short>
+                                Numéro de la caisse d'allocations familiales à laquelle le membre
+                                (l'entreprise) est jointe.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="FAK-CAF-CustomerNumber" type="oa:NotEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>FAK-Mitgliednummer</translation>
+                        <description>
+                            <short>
+                                Von der Familienausgleichskasse zugeteilte Mitglied- oder Abrechnungsnummer, die zur
+                                eindeutigen
+                                Identifikation des Mitgliedes (des Unternehmens) dient.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Numéro de membre CAF</translation>
+                        <description>
+                            <short>
+                                Numéro de membre attribué de la caisse d'allocations familiales qui
+                                sert à l'identification de membre (de l'entreprise).
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="FAK-CAF-SubNumber" type="oa:IDType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>FAK-SubNummer</translation>
+                        <description>
+                            <short>
+                                Ein Kunde kann in der Kundennummer mehrere Subnummern für separate Abrechnungen
+                                wünschen.
+                                Diese werden z.B. für Tochtergesellschaften, Kaderlöhne usw. verwendet
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Numéro accessoire CAF</translation>
+                        <description>
+                            <short>
+                                Un client peut souhaiter que le numéro de membre comporte plusieurs numéros
+                                accessoires pour des décomptes séparés servant par exemple pour les filiales,
+                                les salaires des cadres, etc.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GenericCustomerIdentificationMultiType">
+        <xs:sequence>
+            <xs:element name="InsuranceID" type="oa:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Versicherungsidentifikation</translation>
+                        <description>
+                            <short>Versicherungsidentifikation gemäss seperater Liste</short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur d'assurance</translation>
+                        <description>
+                            <short>Identificateur d'assurance selon liste séparée</short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InsuranceCompanyName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Versicherungsname</translation>
+                        <description>
+                            <short>
+                                Name der Sozialversicherung
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Nom d'assurance</translation>
+                        <description>
+                            <short>
+                                Nom de l'assurance sociale
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CustomerIdentity" type="oa:NotEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Versicherungs Kunden Identifikation</translation>
+                        <description>
+                            <short>
+                                Von der Versicherung zugeteilte Kunden-Identifikation, die zur eindeutigen
+                                Identifikation des Betriebes
+                                (der Unternehmen) dient.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur du client de l'assurance</translation>
+                        <description>
+                            <short>
+                                Numéro de client attribué par l'assurance, qui sert à l'identification unique de
+                                l'entreprise.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ContractIdentity" type="oa:NotEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Vertragsidentifikation</translation>
+                        <description>
+                            <short>
+                                Von der Versicherung zugeteilte Vertrags-Identifikation.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur de contrat</translation>
+                        <description>
+                            <short>
+                                Identificateur de contrat attribuée par l'assurance.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GenericInstitutionIdentificationType">
+        <xs:sequence>
+            <xs:element name="InstitutionID" type="oa:IDType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Versicherungsidentifikation</translation>
+                        <description>
+                            <short>Versicherungsidentifikation gemäss seperater Liste</short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur d'assurance</translation>
+                        <description>
+                            <short>Identificateur d'assurance selon liste séparée</short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InstitutionCompanyName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Versicherungsname</translation>
+                        <description>
+                            <short>
+                                Name der Sozialversicherung
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Nom d'assurance</translation>
+                        <description>
+                            <short>
+                                Nom de l'assurance sociale
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CustomerIdentity" type="oa:NotEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Kunden Identifikation</translation>
+                        <description>
+                            <short>
+                                Von der Institution zugeteilte Kunden-Identifikation, die zur eindeutigen
+                                Identifikation des Betriebes
+                                (der Unternehmen) dient.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur du client de l'institution</translation>
+                        <description>
+                            <short>
+                                Numéro de client attribué par l'institution, qui sert à l'identification unique de
+                                l'entreprise.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ContractIdentity" type="oa:NotEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Vertragsidentifikation</translation>
+                        <description>
+                            <short>
+                                Von der Versicherung zugeteilte Vertrags-Identifikation.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur de contrat</translation>
+                        <description>
+                            <short>
+                                Identificateur de contrat attribuée par l'assurance.
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TaxAtSourceCustomerIdentificationBaseType">
+        <xs:sequence>
+            <xs:element name="CantonID" type="oa:CantonAddressType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Kantonsidentifikation</translation>
+                        <description>
+                            <short>Kantonsidentifikation gemäss seperater Liste (Kantonskürzel)</short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur du canton</translation>
+                        <description>
+                            <short>Identificateur du canton selon liste séparée (abréviation du canton)</short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>TAtSrc</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CustomerIdentity" type="oa:NotEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Kunden Identifikation</translation>
+                        <description>
+                            <short>
+                                Von der Quellensteuerverwaltung zugeteilte Kunden-Identifikation, die zur
+                                eindeutigen Identifikation des Unternehmens dient
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur du client</translation>
+                        <description>
+                            <short>
+                                Numéro de client attribué par l'administration cantonale, qui sert à l'identification
+                                unique de l'entreprise
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>TAtSrc</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StatisticIdentificationType">
+        <xs:sequence>
+            <xs:element name="CustomerIdentity" type="oa:NotEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Kunden Identifikation</translation>
+                        <description>
+                            <short>
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur du client</translation>
+                        <description>
+                            <short>
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CustomerIdentity2" type="oa:NotEmptyStringType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Kunden Identifikation</translation>
+                        <description>
+                            <short>
+                            </short>
+                        </description>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Identificateur du client</translation>
+                        <description>
+                            <short>
+                            </short>
+                        </description>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AuthorizedForCompanyType">
+        <xs:sequence>
+            <xs:element name="Company" type="c:DelegateType"/>
+            <xs:element name="ContactPerson" type="oa:ContactPersonType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="ContactPersonType">
+        <xs:sequence>
+            <xs:element name="Name" type="c:NotEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Name</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Nom</translation>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>all</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Department" type="c:NotEmptyStringType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Name</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Nom</translation>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>all</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EmailAddress" type="oa:EmailAddressType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>EmailAdresse</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Adresse e-mail</translation>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>all</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PhoneNumber" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Telefonnummer</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Numéro de téléphone</translation>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>all</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MobilePhoneNumber" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">
+                        <translation>Handy Telefonnummer</translation>
+                    </xs:documentation>
+                    <xs:documentation xml:lang="fr">
+                        <translation>Numéro de téléphone mobile</translation>
+                    </xs:documentation>
+                    <xs:documentation>
+                        <usage>all</usage>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="AK-CC-NumberType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">
+                <translation>AK-Nummer Typ</translation>
+                <description>
+                    <short>Ausgleichskasse Nummer Typ</short>
+                    <technical>
+                        Muster: 3-Stellen Punkt 3-Stellen
+                        Werte mit drei führenden Nullen sind nicht erlaubt
+                        z.B. 000.003 ist nicht korrekt, 003.000 dagegen ist korrekt
+                    </technical>
+                </description>
+            </xs:documentation>
+            <xs:documentation xml:lang="fr">
+                <translation>Type de numéro AC</translation>
+                <description>
+                    <short>Type de numéro de la caisse de compensation</short>
+                </description>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:pattern value="([1-9][0-9]{2}|[0-9][1-9][0-9]|[0-9]{2}[1-9])\.[0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CantonAddressType">
+        <!-- abTodo evtl. vereinfachen mittels extension abklären -->
+        <xs:annotation>
+            <xs:documentation xml:lang="de">
+                <translation>KantonsTyp</translation>
+                <description>
+                    <short>KantonsTyp der Schweiz</short>
+                </description>
+            </xs:documentation>
+            <xs:documentation xml:lang="fr">
+                <translation>Type de canton</translation>
+                <description>
+                    <short>Type de canton Suisse</short>
+                </description>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="AG"/>
+            <xs:enumeration value="AI"/>
+            <xs:enumeration value="AR"/>
+            <xs:enumeration value="BE"/>
+            <xs:enumeration value="BL"/>
+            <xs:enumeration value="BS"/>
+            <xs:enumeration value="FR"/>
+            <xs:enumeration value="GE"/>
+            <xs:enumeration value="GL"/>
+            <xs:enumeration value="GR"/>
+            <xs:enumeration value="JU"/>
+            <xs:enumeration value="LU"/>
+            <xs:enumeration value="NE"/>
+            <xs:enumeration value="NW"/>
+            <xs:enumeration value="OW"/>
+            <xs:enumeration value="SG"/>
+            <xs:enumeration value="SH"/>
+            <xs:enumeration value="SO"/>
+            <xs:enumeration value="SZ"/>
+            <xs:enumeration value="TG"/>
+            <xs:enumeration value="TI"/>
+            <xs:enumeration value="UR"/>
+            <xs:enumeration value="VD"/>
+            <xs:enumeration value="VS"/>
+            <xs:enumeration value="ZG"/>
+            <xs:enumeration value="ZH"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="UID-BFSType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">
+                <translation>Unternehmensidentifikation Typ</translation>
+                <description>
+                    <short>Unternehmensidentifikation Typ</short>
+                </description>
+            </xs:documentation>
+            <xs:documentation xml:lang="fr">
+                <translation>Type d'identificateur d'entreprise</translation>
+                <description>
+                    <short>Type d'identificateur d'entreprise</short>
+                </description>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:pattern value="CHE-[0-9]{3}\.[0-9]{3}\.[0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NotEmptyStringType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="IDType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="255"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EmailAddressType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">
+                <translation>Email Adresse</translation>
+            </xs:documentation>
+            <xs:documentation xml:lang="fr">
+                <translation>Adresse mél</translation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[^@]+@[^\.]+\..+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 1996-2017 swissdec & itServe AG. All rights reserved.
+    This software is the proprietary information of itServe AG as implementor for swissdec.
+    Use is subject to license terms.
+
+-->
+<xs:schema
+        targetNamespace="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthenticationServiceTypes"
+        xmlns:oac="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthenticationContainer"
+        xmlns:c="http://www.swissdec.ch/schema/common/20200220/Common"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+        attributeFormDefault="unqualified" version="0.0">
+
+    <!-- 11.09.2023  author: itServe, bfh
+        intern: final-1.1.0 // FINAL
+        business-view  = OK
+        technical-view = final
+
+        SVN keywords
+        $Date::                                                 $: Date of last commit
+        $Revision::                                             $: Revision of last commit
+        $Author::                                               $: Author of last commit
+
+   -->
+
+    <xs:import
+            namespace="http://www.swissdec.ch/schema/common/20200220/Common"
+            schemaLocation="Common.xsd"/>
+    <xs:import
+            namespace="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthenticationContainer"
+            schemaLocation="OrganizationAuthenticationContainer.xsd"/>
+
+    <!-- definitions Ping -->
+    <xs:element name="Ping" type="c:PingType"/>
+    <xs:element name="PingResponse" type="c:PingResponseType"/>
+
+
+    <!-- definitions CheckInteroperability -->
+    <xs:element name="CheckInteroperability" type="c:CheckInteroperabilityType"/>
+    <xs:element name="CheckInteroperabilityResponse" type="c:CheckInteroperabilityResponseType"/>
+
+
+    <!-- definitions RegisterOrganization -->
+    <xs:element name="RegisterOrganization" type="oac:RegisterOrganizationRequestType"/>
+    <xs:element name="RegisterOrganizationResponse" type="oac:RegisterOrganizationResponseType"/>
+
+    <!-- definitions GetResultFromRegisterOrganization -->
+    <xs:element name="GetResultFromOrganizationRegistration"
+                type="oac:GetResultFromOrganizationRegistrationRequestType"/>
+    <xs:element name="GetResultFromOrganizationRegistrationResponse"
+                type="oac:GetResultFromOrganizationRegistrationResponseType"/>
+
+
+    <!-- definitions SignCertificate -->
+    <xs:element name="SignCertificate" type="oac:SignCertificateRequestType"/>
+    <xs:element name="SignCertificateResponse" type="oac:SignCertificateResponseType"/>
+
+
+    <!-- definitions RenewCertificate -->
+    <xs:element name="RenewCertificate" type="oac:RenewCertificateRequestType"/>
+    <xs:element name="RenewCertificateResponse" type="oac:RenewCertificateResponseType"/>
+
+
+    <!-- *********** -->
+    <!-- ** FAULT ** -->
+    <!-- *********** -->
+    <!-- definition OrganizationAuthenticationFault -->
+    <xs:element name="OrganizationAuthenticationFault" type="oac:OrganizationAuthenticationFaultType">
+        <xs:annotation>
+            <xs:documentation>OrganizationAuthenticationFault</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+</xs:schema>

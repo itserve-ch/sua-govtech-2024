@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 1996-2017 swissdec & itServe AG. All rights reserved.
+    This software is the proprietary information of itServe AG as implementor for swissdec.
+    Use is subject to license terms.
+
+-->
+<wsdl:definitions
+        xmlns:oas="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthenticationService"
+        xmlns:oast="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthenticationServiceTypes"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        name="OrganizationAuthenticationService"
+        targetNamespace="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthenticationService">
+
+    <!-- 11.09.2023  author: itServe, bfh
+        intern: final-1.1.0 // FINAL
+        business-view  = OK
+        technical-view = final
+
+        SVN keywords
+        $Date::                                                 $: Date of last commit
+        $Revision::                                             $: Revision of last commit
+        $Author::                                               $: Author of last commit
+
+   -->
+
+    <wsdl:types>
+        <xs:schema>
+            <xs:import namespace="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthenticationServiceTypes"
+                       schemaLocation="OrganizationAuthenticationServiceTypes.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+
+    <!-- Ping -->
+    <wsdl:message name="PingRequest">
+        <wsdl:part name="parameters" element="oast:Ping"/>
+    </wsdl:message>
+    <wsdl:message name="PingResponse">
+        <wsdl:part name="parameters" element="oast:PingResponse"/>
+    </wsdl:message>
+
+
+    <!-- CheckInterop -->
+    <wsdl:message name="CheckInteroperabilityRequest">
+        <wsdl:part name="parameters" element="oast:CheckInteroperability"/>
+    </wsdl:message>
+    <wsdl:message name="CheckInteroperabilityResponse">
+        <wsdl:part name="parameters" element="oast:CheckInteroperabilityResponse"/>
+    </wsdl:message>
+
+
+    <!-- Registration -->
+    <wsdl:message name="RegisterOrganizationRequest">
+        <wsdl:part name="parameters" element="oast:RegisterOrganization"/>
+    </wsdl:message>
+    <wsdl:message name="RegisterOrganizationResponse">
+        <wsdl:part name="parameters" element="oast:RegisterOrganizationResponse"/>
+    </wsdl:message>
+
+    <!-- GetResultFromRegistration -->
+    <wsdl:message name="GetResultFromOrganizationRegistrationRequest">
+        <wsdl:part name="parameters" element="oast:GetResultFromOrganizationRegistration"/>
+    </wsdl:message>
+    <wsdl:message name="GetResultFromOrganizationRegistrationResponse">
+        <wsdl:part name="parameters" element="oast:GetResultFromOrganizationRegistrationResponse"/>
+    </wsdl:message>
+
+    <!-- Certificate Signing -->
+    <wsdl:message name="CertificateSigningRequest">
+        <wsdl:part name="parameters" element="oast:SignCertificate"/>
+    </wsdl:message>
+    <wsdl:message name="CertificateSigningResponse">
+        <wsdl:part name="parameters" element="oast:SignCertificateResponse"/>
+    </wsdl:message>
+
+    <!-- Fault -->
+    <wsdl:message name="OrganizationAuthenticationFault">
+        <wsdl:part name="parameters" element="oast:OrganizationAuthenticationFault"/>
+    </wsdl:message>
+
+    <wsdl:portType name="OrganizationAuthenticationPort">
+        <wsdl:operation name="Ping">
+            <wsdl:input message="oas:PingRequest"/>
+            <wsdl:output message="oas:PingResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="CheckInteroperability">
+            <wsdl:input message="oas:CheckInteroperabilityRequest"/>
+            <wsdl:output message="oas:CheckInteroperabilityResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="RegisterOrganization">
+            <wsdl:input message="oas:RegisterOrganizationRequest"/>
+            <wsdl:output message="oas:RegisterOrganizationResponse"/>
+            <wsdl:fault name="OrganizationAuthenticationFault" message="oas:OrganizationAuthenticationFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetResultFromRegisterOrganization">
+            <wsdl:input message="oas:GetResultFromOrganizationRegistrationRequest"/>
+            <wsdl:output message="oas:GetResultFromOrganizationRegistrationResponse"/>
+            <wsdl:fault name="OrganizationAuthenticationFault" message="oas:OrganizationAuthenticationFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="SignCertificate">
+            <wsdl:input message="oas:CertificateSigningRequest"/>
+            <wsdl:output message="oas:CertificateSigningResponse"/>
+            <wsdl:fault name="OrganizationAuthenticationFault" message="oas:OrganizationAuthenticationFault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="OrganizationAuthenticationSOAPBinding" type="oas:OrganizationAuthenticationPort">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="Ping">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="CheckInteroperability">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="RegisterOrganization">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="OrganizationAuthenticationFault">
+                <soap:fault name="OrganizationAuthenticationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="GetResultFromRegisterOrganization">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="OrganizationAuthenticationFault">
+                <soap:fault name="OrganizationAuthenticationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="SignCertificate">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="OrganizationAuthenticationFault">
+                <soap:fault name="OrganizationAuthenticationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+    <wsdl:service name="OrganizationAuthenticationService">
+        <wsdl:port name="OrganizationAuthentication" binding="oas:OrganizationAuthenticationSOAPBinding">
+            <soap:address
+                    location="http://tst.itserve.ch/services/OrganizationAuthentication"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>
