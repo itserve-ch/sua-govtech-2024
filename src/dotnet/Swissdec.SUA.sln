@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swissdec.SUA.Client", "Swissdec.SUA.Client\Swissdec.SUA.Client.csproj", "{FDB38BA9-744F-459A-958A-1C6C8EF684CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swissdec.SUA.Client.Tests", "Swissdec.SUA.Client.Tests\Swissdec.SUA.Client.Tests.csproj", "{8FBC4545-236E-40DF-8C18-3477C773D5FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FDB38BA9-744F-459A-958A-1C6C8EF684CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDB38BA9-744F-459A-958A-1C6C8EF684CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDB38BA9-744F-459A-958A-1C6C8EF684CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDB38BA9-744F-459A-958A-1C6C8EF684CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FBC4545-236E-40DF-8C18-3477C773D5FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FBC4545-236E-40DF-8C18-3477C773D5FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FBC4545-236E-40DF-8C18-3477C773D5FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FBC4545-236E-40DF-8C18-3477C773D5FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36AC32EB-B222-4983-9F4C-1716B55FEFCB}
+	EndGlobalSection
+EndGlobal
