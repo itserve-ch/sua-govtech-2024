@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RegisterOrganization xmlns="http://www.swissdec.ch/schema/oa/20190301/OrganizationAuthenticationServiceTypes"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.swissdec.ch/schema/oa/20190301/OrganizationAuthenticationServiceTypes file:/home/stettler/projects/swissdec/schemas/oa/tags/rc-3.0.0-20190731-SUA-Version1PilotV20190301/wsdl/OrganizationAuthenticationServiceTypes.xsd">
+    <RequestContext xmlns="http://www.swissdec.ch/schema/oa/20190301/OrganizationAuthenticationContainer">
+        <UserAgent>
+            <Producer xmlns="http://www.swissdec.ch/schema/common/20180901/Common">itServe AG</Producer>
+            <Name xmlns="http://www.swissdec.ch/schema/common/20180901/Common">Sample</Name>
+            <Version xmlns="http://www.swissdec.ch/schema/common/20180901/Common">0.1</Version>
+            <StandardVersion xmlns="http://www.swissdec.ch/schema/common/20180901/Common">1.0</StandardVersion>
+            <Certificate xmlns="http://www.swissdec.ch/schema/common/20180901/Common">n/A</Certificate>
+        </UserAgent>
+        <CompanyName>
+            <HR-RC-Name xmlns="http://www.swissdec.ch/schema/common/20180901/Common">ICHAG</HR-RC-Name>
+        </CompanyName>
+        <TransmissionDate>2019-08-27T09:24:30.000</TransmissionDate>
+        <RequestID>RequestId</RequestID>        
+        <LanguageCode>de</LanguageCode>
+        <MonitoringID>stettler</MonitoringID>
+    </RequestContext>
+    <OrganizationRegistration xmlns="http://www.swissdec.ch/schema/oa/20190301/OrganizationAuthenticationContainer">
+        <Institution xmlns="http://www.swissdec.ch/schema/oa/20190301/OrganizationAuthentication">
+            <UVG-LAA>
+                <InsuranceID>S999</InsuranceID>
+                <InsuranceCompanyName>Suva</InsuranceCompanyName>
+                <CustomerIdentity>CustomerId</CustomerIdentity>
+                <ContractIdentity>ContractId</ContractIdentity>
+            </UVG-LAA>
+        </Institution>
+        <CompanyUID-BFS xmlns="http://www.swissdec.ch/schema/oa/20190301/OrganizationAuthentication">CHE-108.603.102</CompanyUID-BFS>
+        <CompanyName xmlns="http://www.swissdec.ch/schema/oa/20190301/OrganizationAuthentication">
+            <HR-RC-Name xmlns="http://www.swissdec.ch/schema/common/20180901/Common">ICHAG</HR-RC-Name>
+        </CompanyName>
+        <CompanyContactPerson xmlns="http://www.swissdec.ch/schema/oa/20190301/OrganizationAuthentication">
+            <Name>Fredi Balmer</Name>
+            <EmailAddress>fb@xxxxxxxx.ch</EmailAddress>
+        </CompanyContactPerson>
+    </OrganizationRegistration>
+</RegisterOrganization>
