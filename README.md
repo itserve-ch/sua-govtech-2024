@@ -16,7 +16,12 @@ The resources folder contains the following artifacts:
   * OrganizationAuthenticationRenewService.wsdl: endpoint description for reissuing the certificates
   * *.xsd: datastructure description in xml
 
-## Testsystems
+## Dokumente
+
+[Detailspezifikation Unternehmens-Authentifizierung](https://www.swissdec.ch/document/share/158/c0b9144a-1d7f-4964-96ce-1d2c6d7c9d05)
+
+
+# Testsystems
 
 Service endpoint: https://tst.itserve.ch/swissdec/refapps/stable/receiver/services/OrganizationAuthenticationService20190301
 
