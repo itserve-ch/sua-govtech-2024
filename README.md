@@ -23,6 +23,6 @@ The resources folder contains the following artifacts:
 
 # Testsystems
 
-Service endpoint: https://tst.itserve.ch/swissdec/refapps/stable/receiver/services/OrganizationAuthenticationService20190301
+Service endpoint: https://tst.itserve.ch/swissdec/refapps/stable/receiver/services/OrganizationAuthenticationService20230301
 
-Service endpoint renew: https://tst.itserve.ch/swissdec/refapps/stable/receiver/services/OrganizationAuthenticationRenewService20190301
+Service endpoint renew: https://tst.itserve.ch/swissdec/refapps/stable/receiver/services/OrganizationAuthenticationRenewService20230301

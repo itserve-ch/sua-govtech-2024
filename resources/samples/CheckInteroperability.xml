@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:CheckInteroperability xmlns="http://www.swissdec.ch/schema/common/20200220/Common" xmlns:ns2="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthenticationContainer" xmlns:ns4="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthenticationServiceTypes" xmlns:ns3="http://www.swissdec.ch/schema/oa/20230301/OrganizationAuthentication">
+    <UserAgent>
+        <Producer>itServe AG</Producer>
+        <Name>RefAppsTransmitter</Name>
+        <Version>3.0</Version>
+        <StandardVersion>1</StandardVersion>
+        <Certificate>9999.99</Certificate>
+    </UserAgent>
+    <UmlautString>ÄËÖÜÁÉÓÚÀÈÒÙÂÊÔÛ</UmlautString>
+    <FirstOperand>999000000000.00</FirstOperand>
+    <SecondOperand>10.50</SecondOperand>
+    <SystemDateTime>2024-03-14T15:18:33.579+01:00</SystemDateTime>
+    <MonitoringID>stettler</MonitoringID>
+</ns4:CheckInteroperability>
