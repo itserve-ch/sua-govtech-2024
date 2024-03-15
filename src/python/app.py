@@ -25,17 +25,14 @@ result1 = client.service.Ping(
     SystemDateTime=date
     )
 
-try:
-    result2 = client.service.CheckInteroperability(
-        UserAgent=useragent,
-        MonitoringID='stettler',
-        SystemDateTime=date,
-        UmlautString="ÄËÖÜÁÉÓÚÀÈÒÙÂÊÔÛ",
-        FirstOperand=999000000000.00,
-        SecondOperand=10.50,
-        )
-except exceptions.Fault as e:
-    pass
+result2 = client.service.CheckInteroperability(
+    UserAgent=useragent,
+    MonitoringID='stettler',
+    SystemDateTime=date,
+    UmlautString="ÄËÖÜÁÉÓÚÀÈÒÙÂÊÔÛ",
+    FirstOperand=999000000000.00,
+    SecondOperand=10.50,
+    )
 
 
 
