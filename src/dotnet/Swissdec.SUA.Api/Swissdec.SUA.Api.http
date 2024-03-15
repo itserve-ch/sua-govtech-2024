@@ -1,0 +1,13 @@
+@Swissdec.SUA.Api_HostAddress = https://localhost:44380
+
+POST {{Swissdec.SUA.Api_HostAddress}}/certificate/request
+Content-Type: application/json
+
+{
+    "commonName": "GovTechHackaton2024",
+    "pfxPassword": "iamgod"
+}
+
+###
+//curl "https://localhost:44380/certificate/request" -X POST -H "Content-Type: application/json" -d "{\"commonName\":\"GovTechHackaton2024\", \"pfxpassword\":\"iamgod\"}" -o GovTechHackaton2024.pfx
+//certutil -dump GovTechHackaton2024.pfx
